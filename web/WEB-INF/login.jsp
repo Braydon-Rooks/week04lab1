@@ -17,8 +17,9 @@
             Username: <input type="text" name="user"> <br>
             Password: <input type="text" name="password"><br>
             <input type="submit" value="Login"><br>
-            <input type="checkbox" name ="remember" value="remember"> Remember me
+            <input type="checkbox" name ="remember" value="test"> Remember me
         </form>
         ${check}
+        ${notFull}
     </body>
 </html>
