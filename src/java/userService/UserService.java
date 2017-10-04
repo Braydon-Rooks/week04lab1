@@ -15,12 +15,13 @@ public class UserService {
     String user2 = "betty";
     String passwords = "password";
     
-   User newUser = new User();
+   
     
     public User login(String user,String pass)
     {
         if((user1.equals(user)||user2.equals(user))&&passwords.equals(pass))
         {
+            User newUser = new User(user,pass);
             newUser.setUserName(user);
             newUser.setPassWord(null);
             return newUser;

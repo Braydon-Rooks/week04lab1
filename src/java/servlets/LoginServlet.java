@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import userService.User;
 import userService.UserService;
 
 /**
@@ -25,6 +26,18 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+        String cookieName = "userCookie";
+        
+        if(cookies!= null)
+        {
+        for(Cookie cookie: cookies)
+        {
+            if (cookieName.equals(cookie.getName()))
+                    request.setAttribute("oldUser",cookie.getValue());
+        }
+        }
+        
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
@@ -35,8 +48,11 @@ public class LoginServlet extends HttpServlet {
         
         UserService userServ = new UserService();
         String user=request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String remember = request.getParameter("remember");
+        String pass = request.getParameter("password");
+        String[] remember = request.getParameterValues("remember");
+        
+        Cookie cookie= new Cookie("userCookie",user);
+        
         
         if(user==null||user.isEmpty()||pass==null||pass.isEmpty())
         {
@@ -45,21 +61,30 @@ public class LoginServlet extends HttpServlet {
         }
         if(userServ.login(user,pass) != null)
         {
+            User newUser = new User(user,null);
             HttpSession session = request.getSession();
-            session.setAttribute("loggedInUser",userServ.login(user,pass));
+            session.setAttribute("loggedInUser",newUser.getUserName());
             
-            if("BUTTON CHECKED")
+            if(remember !=null)
             {
-                Cookie cookie= new Cookie("cookie",user);
+                
                 cookie.setMaxAge(60*60*24);
                 cookie.setPath("/");
                 response.addCookie(cookie);
             
             }
-            
+            else
+            {
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
+           
+            response.sendRedirect("Home");
             
         }
         
+        /*
         if( remember == null);
         {
             request.setAttribute("check","not checked");
@@ -67,7 +92,7 @@ public class LoginServlet extends HttpServlet {
         }
         request.setAttribute("check", "checked");
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-        
+        */
       
     }
 

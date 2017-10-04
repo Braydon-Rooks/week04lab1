@@ -14,7 +14,7 @@
     <body>
         <h1>Remember Me Login Page</h1>
         <form method="post" action="Login">
-            Username: <input type="text" name="user"> <br>
+            Username: <input type="text" name="user" value = ${oldUser}> <br>
             Password: <input type="text" name="password"><br>
             <input type="submit" value="Login"><br>
             <input type="checkbox" name ="remember" value="test"> Remember me

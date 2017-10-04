@@ -13,8 +13,10 @@ public class User {
     
     String userName;
     String passWord;
+
     
-    public void User(String user,String pass)
+    
+    public User(String user,String pass)
     {
         this.userName = user;
         this.passWord = pass;

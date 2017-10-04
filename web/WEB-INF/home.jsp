@@ -9,9 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
+        <title>Home</title>
     </head>
     <body>
+        <h1>Home Page</h1>
+        Hello ${loggedInUser}.<br>
+        <a href="Login">Log Out</a>
         
     </body>
 </html>
