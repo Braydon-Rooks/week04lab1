@@ -28,17 +28,43 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
         String cookieName = "userCookie";
+         HttpSession session = request.getSession();
         
-        if(cookies!= null)
+        if(request.getParameter("action") != null)
         {
-        for(Cookie cookie: cookies)
-        {
-            if (cookieName.equals(cookie.getName()))
+           
+             String loggedOutUser = (String) session.getAttribute("loggedInUser");
+             request.setAttribute("loggedOut",loggedOutUser + " has logged out");
+            session.invalidate();
+            
+             for(Cookie cookie: cookies)
+            {
+                 if (cookieName.equals(cookie.getName()))
                     request.setAttribute("oldUser",cookie.getValue());
+                 
+            }
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            
+        } 
+        else if(session.getAttribute("loggedInUser")!=null)
+        {
+            response.sendRedirect("Home");
         }
+        else if(cookies!= null)
+        {
+            for(Cookie cookie: cookies)
+            {
+                 if (cookieName.equals(cookie.getName()))
+                    request.setAttribute("oldUser",cookie.getValue());
+                 getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            }
+       
+        }
+         else
+        {
+          getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
         
-        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
     
@@ -83,16 +109,12 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("Home");
             
         }
-        
-        /*
-        if( remember == null);
+        else
         {
-            request.setAttribute("check","not checked");
+            request.setAttribute("incorrectLogin", "Incorrect Username or Password");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
-        request.setAttribute("check", "checked");
-        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-        */
+        
       
     }
 

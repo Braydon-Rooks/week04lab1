@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Remember Me Login Page</h1>
+        ${test}
         <form method="post" action="Login">
             Username: <input type="text" name="user" value = ${oldUser}> <br>
             Password: <input type="text" name="password"><br>
@@ -21,5 +22,7 @@
         </form>
         ${check}
         ${notFull}
+        ${loggedOut}
+        ${incorrectLogin}
     </body>
 </html>

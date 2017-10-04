@@ -14,7 +14,7 @@
     <body>
         <h1>Home Page</h1>
         Hello ${loggedInUser}.<br>
-        <a href="Login">Log Out</a>
+        <a href="Login?action=logout">Log Out</a>
         
     </body>
 </html>
